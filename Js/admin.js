@@ -30,7 +30,36 @@ const handleSubmit=(e)=>{
     localStorage.setItem("listaProductos", JSON.stringify(arrProductos));
     //Para resetear el Formulario (este caso utilizo la variable Form)
     form.reset()
+    //agrego la funcion (crearFilaProducto con nuevoProducto) para que los producto que valla creando se me agreguen sin necesidad de actualizar la pagina
+    crearFilaProducto(nuevoProducto);
 }
 
 //ahora la etiqueta form escucha el evento
 form.addEventListener("submit" , handleSubmit)
+
+//traigo el Tbody del html
+
+let tbodyListaProductos = document.getElementById("bodyListaProductos")
+
+//ahora necesito recorrer el arrayProductos y me valla creando uno por uno
+//entonces primero creo una funcion y desp lo recorro con un Foreach
+
+const crearFilaProducto = (producto) =>{
+    tbodyListaProductos.innerHTML += `
+    <tr>
+        <th>${producto.codigo}</th>
+        <th>${producto.producto}</th>
+        <th>${producto.descripcion}</th>
+        <th>${producto.precio}</th>
+        <th>${producto.url}</th>
+        <th class="text-center">
+      <button class="btn btn-primary my-1">Borrar</button>
+      <button class="btn btn-warning my-1">Editar</button>
+        </th>
+  </tr>
+    `
+}
+//recorro el array
+arrProductos.forEach(element => {
+    crearFilaProducto(element)
+});
